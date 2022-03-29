@@ -14,6 +14,10 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.example.parstagram.fragments.ComposeFragment
+import com.example.parstagram.fragments.FeedFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.File
@@ -28,16 +32,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val fragmentManager: FragmentManager = supportFragmentManager
+
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnItemReselectedListener {
             item ->
+
+            var fragmentToShow: Fragment? = null
             when (item.itemId) {
                 R.id.action_home -> {
-                    // TODO: navigate to home screen
-                    Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show()
+                    fragmentToShow = FeedFragment()
                 }
                 R.id.action_compose -> {
-                    // TODO: navigate to compose screen
-                    Toast.makeText(this, "Compose", Toast.LENGTH_SHORT).show()
+                    fragmentToShow = ComposeFragment()
                 }
                 R.id.action_profile -> {
                     // TODO: navigate to profile screen
@@ -45,8 +51,15 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+
+            if (fragmentToShow != null) {
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragmentToShow).commit()
+            }
             // return true to say that we've handled this user interaction on the item
+            true
         }
+        // Set default selection
+        findViewById<BottomNavigationView>(R.id.bottom_navigation).selectedItemId = R.id.action_home
     }
 
     // Query for all posts in our server
