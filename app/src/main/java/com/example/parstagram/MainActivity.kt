@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.parstagram.fragments.ComposeFragment
 import com.example.parstagram.fragments.FeedFragment
 import com.example.parstagram.fragments.ProfileFragment
@@ -23,10 +24,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.parse.*
 import java.io.File
 
-/*
-* Let user create a post by taking a photo with their camera
-*
-* */
+
+// Let user create a post by taking a photo with their camera
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,16 +40,16 @@ class MainActivity : AppCompatActivity() {
             var fragmentToShow: Fragment? = null
             when (item.itemId) {
                 R.id.action_home -> {
-                    // TODO: navigate to home screen/ feed page
+                    // Navigate to home screen/ feed page
                     fragmentToShow = FeedFragment()
                 }
                 R.id.action_compose -> {
-                    // TODO: navigate to Compose screen
+                    // Navigate to Compose screen
                     fragmentToShow = ComposeFragment()
                 }
                 R.id.action_profile -> {
-                    // TODO: navigate to profile screen
-                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
+                    // Navigate to profile screen
+//                    Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show()
                     fragmentToShow = ProfileFragment()
                 }
             }

@@ -57,6 +57,7 @@ class ComposeFragment : Fragment() {
             val post = Post()
             post.setDescription(description)
             post.setUser(user)
+//            post.setCratedTime()
             post.setImage(ParseFile(file))
             post.saveInBackground { exception ->
                 if (exception != null) {

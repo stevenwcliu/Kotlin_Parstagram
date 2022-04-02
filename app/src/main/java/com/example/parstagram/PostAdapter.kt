@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class PostAdapter(val context: Context, val posts:List<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(val context: Context, val posts:ArrayList<Post>): RecyclerView.Adapter<PostAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostAdapter.ViewHolder {
         // specify the layout file to use for this item
         val view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false)
@@ -31,21 +31,37 @@ class PostAdapter(val context: Context, val posts:List<Post>): RecyclerView.Adap
         val tvUsername: TextView
         val ivImage: ImageView
         val tvDescription: TextView
+        val tvCreatedTime: TextView
 
         init {
             tvUsername = itemView.findViewById(R.id.tvUserName)
             ivImage = itemView.findViewById(R.id.ivImage)
             tvDescription = itemView.findViewById(R.id.tvDescription)
+            tvCreatedTime = itemView.findViewById(R.id.tvCreatedTime)
         }
 
-        // bind method - associate the data with the layout
-
-        fun bind(post: Post) {
+        fun bind(post: Post) { // associate the data with the layout
+            tvCreatedTime.text = post.createdAt.toString()
             tvDescription.text = post.getDescription()
             tvUsername.text = post.getUser()?.username
             // set up the Glide Library
             // populate image - take the img from the post and load it into the imView of the layout file
             Glide.with(itemView.context).load(post.getImage()?.url).into(ivImage)
         }
+
+
     }
+
+    // Clean all elements of the recycler
+    fun clear() {
+        posts.clear()
+        notifyDataSetChanged()
+    }
+
+    // Add a list of items
+    fun addAll(postList:List<Post>) {
+        posts.addAll(postList)
+        notifyDataSetChanged()
+    }
+
 }
